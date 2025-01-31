@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend_server
+    environment:
+      DB_HOST: db
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PASSWORD: testpassword
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  frontend:
+    image: nginx:alpine
+    container_name: frontend_server
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+
+volumes:
+  postgres_data:
+
