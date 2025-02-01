@@ -28,23 +28,32 @@ label {
   font-weight: bold;
 }
 
-input {
+input, textarea, select {
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 10px; /* Padding general para todos los campos */
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
+textarea {
+  resize: none; /* Evita que el textarea se redimensione */
+}
+
+select {
+  padding: 10px; /* Padding específico para el select */
+}
+
 button {
-  background: #007BFF;
+  background: #D500FF;
   color: white;
   border: none;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
-  background: #0056b3;
+  background: #9F00BF;
 }
 
