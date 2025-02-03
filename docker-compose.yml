@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpassword
-      POSTGRES_DB: testdb
+      POSTGRES_DB: dbfinancialtracker
     ports:
       - "5432:5432"
     volumes:
@@ -17,13 +17,15 @@ services:
     container_name: backend_server
     environment:
       DB_HOST: db
-      DB_NAME: testdb
+      DB_NAME: dbfinancialtracker
       DB_USER: testuser
       DB_PASSWORD: testpassword
     ports:
       - "5000:5000"
     depends_on:
       - db
+    volumes:
+      - ./backend/app.py:/app/app.py
 
   frontend:
     image: nginx:alpine
