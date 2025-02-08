@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Configuración de la conexión a PostgreSQL
 DB_HOST = os.getenv('DB_HOST', 'db')
-DB_NAME = os.getenv('DB_NAME', 'dbfinancialtracker')
+DB_NAME = os.getenv('DB_NAME', 'dbFinancialTracker')
 DB_USER = os.getenv('DB_USER', 'testuser')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'testpassword')
 
@@ -20,23 +20,20 @@ def connect_db():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    #number = request.form.get('number')
-    #text = request.form.get('text')
 
     fecha = request.form.get('date')
+    categoria = request.form.get('options')
     precio = request.form.get('price')
     descripcion = request.form.get('description')
-    categoria = request.form.get('options')
 
-    if not fecha or not precio or not descripcion:
+    if not fecha or not precio or not categoria:
         return jsonify({'error': 'Rellena los campos correctamente'}), 400
 
     try:
         conn = connect_db()
         cursor = conn.cursor()
         print(DB_NAME)
-        #cursor.execute("INSERT INTO gastos (fecha, precio, descripcion) VALUES (%s, %s, %s)", (fecha, precio, descripcion))
-        cursor.execute("INSERT INTO gastos (fecha, precio, descripcion, categoria) VALUES (%s, %s, %s, %s)", (fecha, precio, descripcion, categoria))
+        cursor.execute("INSERT INTO gastos (fecha, precio, descripcion, categoria) VALUES (%s, %s, %s, %s)", (fecha, precio, None if descripcion == "" else descripcion, categoria))
         conn.commit()
         cursor.close()
         conn.close()

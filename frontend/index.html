@@ -13,19 +13,26 @@
       <label for="date">Fecha:</label>
       <input type="date" id="date" name="date" required>
 
+      <label for="options">Selecciona la categoría:</label>
+      <select id="options" name="options" required>
+        <option value="" disabled selected>-- Elige una opción --</option>
+        <option value="supermercado">Compra Supermercado</option>
+        <option value="ropa">Ropa</option>
+        <option value="estudio">Estudio</option>
+        <option value="fiesta">Fiestas</option>
+        <option value="viaje">Viajes</option>
+        <option value="libro">Libros</option>
+        <option value="suscripcion">Suscripciones</option>
+        <option value="comerFuera">Comer Fuera</option>
+        <option value="entrenamiento">Entrenamiento</option>
+        <option value="otros">Otros</option>
+      </select>
+
       <label for="price">Precio (€):</label>
       <input type="number" id="price" name="price" step="0.01" required>
 
       <label for="description">Descripción:</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
-
-      <label for="options">Selecciona la categoría:</label>
-      <select id="options" name="options" required>
-        <option value="" disabled selected>-- Elige una opción --</option>
-        <option value="opcion1">Opción 1</option>
-        <option value="opcion2">Opción 2</option>
-        <option value="opcion3">Opción 3</option>
-      </select>
+      <textarea id="description" name="description" rows="4"></textarea>
 
       <button type="submit">Enviar</button>
     </form>

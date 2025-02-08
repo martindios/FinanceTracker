@@ -1,24 +1,24 @@
 services:
   db:
     image: postgres:13
-    container_name: postgres_db
+    container_name: postgresDb
     environment:
       POSTGRES_USER: testuser
       POSTGRES_PASSWORD: testpassword
-      POSTGRES_DB: dbfinancialtracker
+      POSTGRES_DB: dbFinancialTracker
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgresData:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
     build:
       context: ./backend
-    container_name: backend_server
+    container_name: backendServer
     environment:
       DB_HOST: db
-      DB_NAME: dbfinancialtracker
+      DB_NAME: dbFinancialTracker
       DB_USER: testuser
       DB_PASSWORD: testpassword
     ports:
@@ -30,7 +30,7 @@ services:
 
   frontend:
     image: nginx:alpine
-    container_name: frontend_server
+    container_name: frontendServer
     volumes:
       - ./frontend:/usr/share/nginx/html:ro
       - ./frontend/default.conf:/etc/nginx/conf.d/default.conf:ro
@@ -38,4 +38,4 @@ services:
       - "8080:80"
 
 volumes:
-  postgres_data:
+  postgresData:
