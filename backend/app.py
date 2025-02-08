@@ -26,6 +26,7 @@ def submit():
     fecha = request.form.get('date')
     precio = request.form.get('price')
     descripcion = request.form.get('description')
+    categoria = request.form.get('options')
 
     if not fecha or not precio or not descripcion:
         return jsonify({'error': 'Rellena los campos correctamente'}), 400
@@ -34,8 +35,8 @@ def submit():
         conn = connect_db()
         cursor = conn.cursor()
         print(DB_NAME)
-        cursor.execute("INSERT INTO gastos (fecha, precio, descripcion) VALUES (%s, %s, %s)", (fecha, precio, descripcion))
-        #cursor.execute("INSERT INTO form_data (number, text) VALUES (%s, %s)", (number, text))
+        #cursor.execute("INSERT INTO gastos (fecha, precio, descripcion) VALUES (%s, %s, %s)", (fecha, precio, descripcion))
+        cursor.execute("INSERT INTO gastos (fecha, precio, descripcion, categoria) VALUES (%s, %s, %s, %s)", (fecha, precio, descripcion, categoria))
         conn.commit()
         cursor.close()
         conn.close()
