@@ -41,5 +41,24 @@ def submit():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/db', methods=['GET'])
+def show_db():
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM gastos;")
+        rows = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        # Generar HTML para mostrar los datos
+        html = "<h1>Entradas de la Base de Datos</h1><table border='1'><tr><th>ID</th><th>Fecha</th><th>Categoría</th><th>Precio</th><th>Descripción</th></tr>"
+        for row in rows:
+            html += f"<tr><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td><td>{row[3]}</td><td>{row[4]}</td></tr>"
+        html += "</table>"
+        return html
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
