@@ -56,6 +56,24 @@ def show_db():
         for row in rows:
             html += f"<tr><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td><td>{row[3]}</td><td>{row[4]}</td></tr>"
         html += "</table>"
+
+        return html
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/stats', methods=['GET'])
+def show_stats():
+    try:
+        conn = connect_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT SUM(precio) FROM gastos;")
+        totalPrecio = cursor.fetchone()[0]
+        cursor.close()
+        conn.close()
+
+        # Generar HTML para mostrar los datos
+        html = "<h1>Estadísticas</h1>"
+        html += f"<p>Total de gastos: {totalPrecio}</p>"
         return html
     except Exception as e:
         return jsonify({'error': str(e)}), 500
